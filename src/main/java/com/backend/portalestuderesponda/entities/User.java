@@ -18,7 +18,7 @@ public class User implements UserDetails, Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id;
+    private Long id;
 
     @Column(nullable = false)
     private String name;
@@ -35,7 +35,7 @@ public class User implements UserDetails, Serializable {
     public User() {
     }
 
-    public User(int id, String name, String email, String password, Role role) {
+    public User(Long id, String name, String email, String password, Role role) {
         this.id = id;
         this.name = name;
         this.email = email;
@@ -78,7 +78,7 @@ public class User implements UserDetails, Serializable {
         return true;
     }
 
-    public int getId() {
+    public Long getId() {
         return id;
     }
 
@@ -94,7 +94,7 @@ public class User implements UserDetails, Serializable {
         return role;
     }
 
-    public void setId(int id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
