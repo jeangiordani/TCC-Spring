@@ -25,10 +25,7 @@ public class ExceptionHandlerFilter extends OncePerRequestFilter {
         try {
             filterChain.doFilter(request, response);
         } catch (JwtException e) {
-
-
             ErrorResponse errorResponse = new ErrorResponse();
-
             errorResponse.setTimestamp(new Date());
             errorResponse.setMessage(e.getMessage());
             errorResponse.setDescription("Token inválido");

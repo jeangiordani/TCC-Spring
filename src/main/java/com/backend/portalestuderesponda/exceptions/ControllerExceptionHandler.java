@@ -3,17 +3,18 @@ package com.backend.portalestuderesponda.exceptions;
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.AccessDeniedException;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.web.bind.MethodArgumentNotValidException;
-import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
+import org.springframework.web.bind.annotation.RestControllerAdvice;
 
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
-@ControllerAdvice
+@RestControllerAdvice
 public class ControllerExceptionHandler {
 
     @ExceptionHandler(DataExistsException.class)
@@ -76,6 +77,27 @@ public class ControllerExceptionHandler {
         response.setStatus(status.value());
         response.setMessage(ex.getMessage());
         response.setDescription("Credenciais incorretas");
+        response.setTimestamp(new Date());
+        return ResponseEntity.status(status).body(response);
+    }
+
+    @ExceptionHandler(Exception.class)
+    public ResponseEntity<ErrorResponse> handleException(Exception ex, HttpServletRequest request) {
+        HttpStatus status = HttpStatus.INTERNAL_SERVER_ERROR;
+        ErrorResponse response = new ErrorResponse();
+        response.setStatus(status.value());
+        response.setDescription(ex.getMessage());
+        response.setTimestamp(new Date());
+        return ResponseEntity.status(status).body(response);
+    }
+
+    @ExceptionHandler(AccessDeniedException.class)
+    public ResponseEntity<ErrorResponse> handleAccessDeniedException(Exception ex, HttpServletRequest request) {
+        HttpStatus status = HttpStatus.UNAUTHORIZED;
+        ErrorResponse response = new ErrorResponse();
+        response.setStatus(status.value());
+        response.setMessage(ex.getMessage());
+        response.setDescription("Usuário não tem autorização para realizar essa ação");
         response.setTimestamp(new Date());
         return ResponseEntity.status(status).body(response);
     }

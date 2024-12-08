@@ -13,6 +13,7 @@ import org.springframework.security.config.annotation.method.configuration.Enabl
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
+import org.springframework.security.config.annotation.web.configurers.HeadersConfigurer;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
@@ -41,7 +42,7 @@ public class SecurityConfiguration {
         http.csrf(AbstractHttpConfigurer::disable)
                 .authorizeHttpRequests(
                         request ->
-                                request.requestMatchers(antMatcher(HttpMethod.GET, "/car/**")).permitAll()
+                                request.requestMatchers(antMatcher(HttpMethod.GET, "/discipline/**")).permitAll()
                                         .requestMatchers(antMatcher("/auth/**")).permitAll()
                                         .requestMatchers(antMatcher("/h2-console/**")).permitAll()
                                         .anyRequest().authenticated()
@@ -49,6 +50,8 @@ public class SecurityConfiguration {
                 .authenticationProvider(authenticationProvider()).addFilterBefore(
                         exceptionHandlerFilter, UsernamePasswordAuthenticationFilter.class
                 ).addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class);
+        http.headers(
+                headers -> headers.frameOptions(HeadersConfigurer.FrameOptionsConfig::sameOrigin));
         return http.build();
     }
 
@@ -58,6 +61,8 @@ public class SecurityConfiguration {
 //        http.authorizeHttpRequests(auth -> auth.anyRequest().permitAll());
 //        return http.build();
 //    }
+
+
 
 //    @Bean
 //    CorsConfigurationSource corsConfigurationSource() {

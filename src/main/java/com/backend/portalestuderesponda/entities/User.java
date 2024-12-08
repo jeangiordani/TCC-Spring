@@ -1,6 +1,7 @@
 package com.backend.portalestuderesponda.entities;
 
 import jakarta.persistence.*;
+import org.hibernate.annotations.ColumnDefault;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -30,6 +31,7 @@ public class User implements UserDetails, Serializable {
     private String password;
 
     @Enumerated(EnumType.STRING)
+    @ColumnDefault("'STUDENT'")
     private Role role;
 
     public User() {
