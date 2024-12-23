@@ -38,4 +38,17 @@ public class DisciplineController {
 //        return ResponseEntity.ok(disciplineService.findAll());
         return ResponseDTO.response(disciplineService.findAll(), HttpStatus.OK);
     }
+
+    @GetMapping("/{id}")
+    public ResponseEntity<Object> findById(@PathVariable Long id) {
+        return ResponseDTO.response(disciplineService.findById(id), HttpStatus.OK);
+    }
+
+    @PreAuthorize("hasAuthority('ADMIN')")
+    @PutMapping("/{id}")
+    public ResponseEntity<Object> update(@PathVariable Long id, @Valid @RequestBody DisciplineDTO dto) {
+        DisciplineDTO updated = disciplineService.update(id, dto);
+
+        return ResponseDTO.response(updated, HttpStatus.OK);
+    }
 }

@@ -48,6 +48,10 @@ public class DisciplineDTO implements Serializable {
         return id;
     }
 
+    public void setId(Long id) {
+        this.id = id;
+    }
+
     public String getName() {
         return name;
     }
@@ -70,5 +74,13 @@ public class DisciplineDTO implements Serializable {
 
     public LocalDateTime getUpdatedAt() {
         return updatedAt;
+    }
+
+    public void setCreatedAt(LocalDateTime createdAt) {
+        this.createdAt = createdAt;
+    }
+
+    public void setUpdatedAt(LocalDateTime updatedAt) {
+        this.updatedAt = updatedAt;
     }
 }
