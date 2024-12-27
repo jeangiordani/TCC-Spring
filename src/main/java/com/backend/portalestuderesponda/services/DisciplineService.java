@@ -6,6 +6,7 @@ import com.backend.portalestuderesponda.exceptions.DataExistsException;
 import com.backend.portalestuderesponda.exceptions.NotFoundException;
 import com.backend.portalestuderesponda.mappers.DisciplineMapper;
 import com.backend.portalestuderesponda.repositories.DisciplineRepository;
+import jakarta.persistence.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -70,6 +71,13 @@ public class DisciplineService {
         disciplineRepository.save(discipline.get());
 
         return disciplineMapper.toDisciplineDTO(discipline.get());
+    }
+
+    public void delete(Long id) {
+        if (!disciplineRepository.existsById(id)) {
+            throw new NotFoundException("Disciplina não encontrada");
+        }
+        disciplineRepository.deleteById(id);
     }
 
 

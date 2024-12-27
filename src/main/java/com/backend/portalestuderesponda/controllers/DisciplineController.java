@@ -51,4 +51,12 @@ public class DisciplineController {
 
         return ResponseDTO.response(updated, HttpStatus.OK);
     }
+
+    @PreAuthorize("hasAuthority('ADMIN')")
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Void> delete(@PathVariable Long id) {
+        disciplineService.delete(id);
+
+        return ResponseEntity.noContent().build();
+    }
 }
