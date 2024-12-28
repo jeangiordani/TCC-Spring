@@ -23,7 +23,7 @@ public class Discipline implements Serializable {
 
     @Column(name = "is_active")
     @ColumnDefault("true")
-    private Boolean isActive;
+    private Boolean active;
 
     @Column(name = "created_at")
     @CreationTimestamp
@@ -37,7 +37,7 @@ public class Discipline implements Serializable {
 
     public Discipline(String name, Boolean isActive) {
         this.name = name;
-        this.isActive = isActive;
+        this.active = isActive;
     }
 
     public Long getId() {
@@ -48,8 +48,8 @@ public class Discipline implements Serializable {
         return name;
     }
 
-    public Boolean getIsActive() {
-        return isActive;
+    public Boolean getActive() {
+        return active;
     }
 
     public LocalDateTime getCreatedAt() {
@@ -64,8 +64,8 @@ public class Discipline implements Serializable {
         this.name = name;
     }
 
-    public void setIsActive(Boolean isActive) {
-        this.isActive = isActive;
+    public void setActive(Boolean active) {
+        this.active = active;
     }
 
     public void setCreatedAt(LocalDateTime createdAt) {
@@ -81,12 +81,12 @@ public class Discipline implements Serializable {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Discipline that = (Discipline) o;
-        return Objects.equals(id, that.id) && Objects.equals(name, that.name) && Objects.equals(isActive, that.isActive) && Objects.equals(createdAt, that.createdAt) && Objects.equals(updatedAt, that.updatedAt);
+        return Objects.equals(id, that.id) && Objects.equals(name, that.name) && Objects.equals(active, that.active) && Objects.equals(createdAt, that.createdAt) && Objects.equals(updatedAt, that.updatedAt);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, name, isActive, createdAt, updatedAt);
+        return Objects.hash(id, name, active, createdAt, updatedAt);
     }
 
     @Override
@@ -94,7 +94,7 @@ public class Discipline implements Serializable {
         return "Discipline{" +
                 "id=" + id +
                 ", name='" + name + '\'' +
-                ", isActive=" + isActive +
+                ", isActive=" + active +
                 ", createdAt=" + createdAt +
                 ", updatedAt=" + updatedAt +
                 '}';

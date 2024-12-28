@@ -43,6 +43,7 @@ public class SecurityConfiguration {
                 .authorizeHttpRequests(
                         request ->
                                 request.requestMatchers(antMatcher(HttpMethod.GET, "/discipline/**")).permitAll()
+                                        .requestMatchers(antMatcher(HttpMethod.GET, "/question/**")).permitAll()
                                         .requestMatchers(antMatcher("/auth/**")).permitAll()
                                         .requestMatchers(antMatcher("/h2-console/**")).permitAll()
                                         .anyRequest().authenticated()

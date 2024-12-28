@@ -18,8 +18,8 @@ public class DisciplineDTO implements Serializable {
     @Length(min = 5, message = "name deve ser maior que 5")
     private String name;
 
-    @NotNull(message = "isActive é obrigatório")
-    private Boolean isActive;
+    @NotNull(message = "active é obrigatório")
+    private Boolean active;
 
     private LocalDateTime createdAt;
 
@@ -27,10 +27,10 @@ public class DisciplineDTO implements Serializable {
 
     public DisciplineDTO() {}
 
-    public DisciplineDTO(Long id, String name, Boolean isActive, LocalDateTime createdAt, LocalDateTime updatedAt) {
+    public DisciplineDTO(Long id, String name, Boolean active, LocalDateTime createdAt, LocalDateTime updatedAt) {
         this.id = id;
         this.name = name;
-        this.isActive = isActive;
+        this.active = active;
         this.createdAt = createdAt;
         this.updatedAt = updatedAt;
 
@@ -39,7 +39,7 @@ public class DisciplineDTO implements Serializable {
     public DisciplineDTO(Discipline discipline) {
         this.id = discipline.getId();
         this.name = discipline.getName();
-        this.isActive = discipline.getIsActive();
+        this.active = discipline.getActive();
         this.createdAt = discipline.getCreatedAt();
         this.updatedAt = discipline.getUpdatedAt();
     }
@@ -60,12 +60,12 @@ public class DisciplineDTO implements Serializable {
         this.name = name;
     }
 
-    public Boolean getIsActive() {
-        return isActive;
+    public Boolean getActive() {
+        return active;
     }
 
-    public void setIsActive(Boolean isActive) {
-        this.isActive = isActive;
+    public void setActive(Boolean active) {
+        this.active = active;
     }
 
     public LocalDateTime getCreatedAt() {

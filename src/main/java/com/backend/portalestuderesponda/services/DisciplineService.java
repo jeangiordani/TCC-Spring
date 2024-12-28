@@ -30,12 +30,9 @@ public class DisciplineService {
         Discipline discipline = new Discipline();
 
         discipline.setName(disciplineDTO.getName());
-        discipline.setIsActive(disciplineDTO.getIsActive());
+        discipline.setActive(disciplineDTO.getActive());
 
-        Discipline newDiscipline = disciplineRepository.save(discipline);
-        newDiscipline.setCreatedAt(LocalDateTime.now());
-        newDiscipline.setUpdatedAt(LocalDateTime.now());
-        return new DisciplineDTO(newDiscipline);
+        return new DisciplineDTO(disciplineRepository.saveAndFlush(discipline));
     }
 
     @Transactional(readOnly = true)
@@ -65,12 +62,9 @@ public class DisciplineService {
             throw new NotFoundException("Disciplina não encontrada");
         }
         discipline.get().setName(disciplineDTO.getName());
-        discipline.get().setIsActive(disciplineDTO.getIsActive());
-        discipline.get().setUpdatedAt(LocalDateTime.now());
+        discipline.get().setActive(disciplineDTO.getActive());
 
-        disciplineRepository.save(discipline.get());
-
-        return disciplineMapper.toDisciplineDTO(discipline.get());
+        return disciplineMapper.toDisciplineDTO(disciplineRepository.saveAndFlush(discipline.get()));
     }
 
     public void delete(Long id) {

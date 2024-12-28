@@ -31,7 +31,7 @@ public class Question implements Serializable {
 
     @Column(name = "is_active")
     @ColumnDefault("true")
-    private Boolean isActive;
+    private Boolean active;
 
     @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.REMOVE)
     @JoinColumn(name = "discipline_id")
@@ -44,6 +44,16 @@ public class Question implements Serializable {
     @Column(name = "updated_at")
     @UpdateTimestamp
     private LocalDateTime updatedAt;
+
+    public Question() {
+    }
+
+    public Question(String statement, String postStatement, Boolean isActive, Discipline discipline) {
+        this.statement = statement;
+        this.postStatement = postStatement;
+        this.active = isActive;
+        this.discipline = discipline;
+    }
 
     public UUID getId() {
         return id;
@@ -70,11 +80,11 @@ public class Question implements Serializable {
     }
 
     public Boolean getActive() {
-        return isActive;
+        return active;
     }
 
     public void setActive(Boolean active) {
-        isActive = active;
+        this.active = active;
     }
 
     public Discipline getDiscipline() {
@@ -106,12 +116,12 @@ public class Question implements Serializable {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Question question = (Question) o;
-        return Objects.equals(id, question.id) && Objects.equals(statement, question.statement) && Objects.equals(postStatement, question.postStatement) && Objects.equals(isActive, question.isActive) && Objects.equals(discipline, question.discipline) && Objects.equals(createdAt, question.createdAt) && Objects.equals(updatedAt, question.updatedAt);
+        return Objects.equals(id, question.id) && Objects.equals(statement, question.statement) && Objects.equals(postStatement, question.postStatement) && Objects.equals(active, question.active) && Objects.equals(discipline, question.discipline) && Objects.equals(createdAt, question.createdAt) && Objects.equals(updatedAt, question.updatedAt);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, statement, postStatement, isActive, discipline, createdAt, updatedAt);
+        return Objects.hash(id, statement, postStatement, active, discipline, createdAt, updatedAt);
     }
 
     @Override
@@ -120,7 +130,7 @@ public class Question implements Serializable {
                 "id=" + id +
                 ", statement='" + statement + '\'' +
                 ", postStatement='" + postStatement + '\'' +
-                ", isActive=" + isActive +
+                ", isActive=" + active +
                 ", discipline=" + discipline +
                 ", createdAt=" + createdAt +
                 ", updatedAt=" + updatedAt +
