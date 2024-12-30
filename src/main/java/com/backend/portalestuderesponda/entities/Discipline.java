@@ -5,6 +5,7 @@ import org.hibernate.annotations.ColumnDefault;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
+import java.io.Serial;
 import java.io.Serializable;
 import java.time.LocalDateTime;
 import java.util.Objects;
@@ -12,6 +13,7 @@ import java.util.Objects;
 @Entity(name = "discipline")
 public class Discipline implements Serializable {
 
+    @Serial
     private static final long serialVersionUID = 1L;
 
     @Id

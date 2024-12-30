@@ -1,27 +1,21 @@
 package com.backend.portalestuderesponda.dtos;
 
-import com.backend.portalestuderesponda.entities.Discipline;
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonProperty;
-import jakarta.persistence.*;
-import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.NotNull;
-import org.hibernate.annotations.ColumnDefault;
-import org.hibernate.annotations.CreationTimestamp;
-import org.hibernate.annotations.UpdateTimestamp;
+import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 
-import java.io.Serial;
-import java.io.Serializable;
 import java.time.LocalDateTime;
-import java.util.Objects;
+import java.util.List;
 import java.util.UUID;
 
+@JsonPropertyOrder(
+        {"id", "statement", "postStatement", "active", "discipline", "createdAt", "updatedAt"}
+)
 public class QuestionDTO extends QuestionInsertDTO {
     private UUID id;
 
-    private Boolean isActive;
-
     private DisciplineDTO discipline;
+
+    private List<AlternativeDTO> alternatives;
 
     private LocalDateTime createdAt;
 
@@ -72,4 +66,13 @@ public class QuestionDTO extends QuestionInsertDTO {
     public void setUpdatedAt(LocalDateTime updatedAt) {
         this.updatedAt = updatedAt;
     }
+
+    public List<AlternativeDTO> getAlternatives() {
+        return alternatives;
+    }
+
+    public void setAlternatives(List<AlternativeDTO> alternatives) {
+        this.alternatives = alternatives;
+    }
+
 }

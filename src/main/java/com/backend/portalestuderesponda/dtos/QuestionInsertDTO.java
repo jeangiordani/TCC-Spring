@@ -1,18 +1,9 @@
 package com.backend.portalestuderesponda.dtos;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 
-import java.io.Serial;
-import java.time.LocalDateTime;
-import java.util.UUID;
-
 public class QuestionInsertDTO {
-
-    @Serial
-    private static final long serialVersionUID = 1L;
 
     @NotBlank(message = "O campo statement é obrigatório")
     private String statement;

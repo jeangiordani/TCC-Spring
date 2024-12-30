@@ -8,6 +8,7 @@ import org.hibernate.annotations.UpdateTimestamp;
 import java.io.Serial;
 import java.io.Serializable;
 import java.time.LocalDateTime;
+import java.util.List;
 import java.util.Objects;
 import java.util.UUID;
 
@@ -45,14 +46,21 @@ public class Question implements Serializable {
     @UpdateTimestamp
     private LocalDateTime updatedAt;
 
+    @OneToMany(mappedBy = "question", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    private List<Alternative> alternatives;
+
     public Question() {
     }
 
-    public Question(String statement, String postStatement, Boolean isActive, Discipline discipline) {
+    public Question(UUID id, String statement, String postStatement, Boolean active, Discipline discipline, LocalDateTime createdAt, LocalDateTime updatedAt, List<Alternative> alternatives) {
+        this.id = id;
         this.statement = statement;
         this.postStatement = postStatement;
-        this.active = isActive;
+        this.active = active;
         this.discipline = discipline;
+        this.createdAt = createdAt;
+        this.updatedAt = updatedAt;
+        this.alternatives = alternatives;
     }
 
     public UUID getId() {
@@ -111,29 +119,12 @@ public class Question implements Serializable {
         this.updatedAt = updatedAt;
     }
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        Question question = (Question) o;
-        return Objects.equals(id, question.id) && Objects.equals(statement, question.statement) && Objects.equals(postStatement, question.postStatement) && Objects.equals(active, question.active) && Objects.equals(discipline, question.discipline) && Objects.equals(createdAt, question.createdAt) && Objects.equals(updatedAt, question.updatedAt);
+    public List<Alternative> getAlternatives() {
+        return alternatives;
     }
 
-    @Override
-    public int hashCode() {
-        return Objects.hash(id, statement, postStatement, active, discipline, createdAt, updatedAt);
+    public void setAlternatives(List<Alternative> alternatives) {
+        this.alternatives = alternatives;
     }
 
-    @Override
-    public String toString() {
-        return "Question{" +
-                "id=" + id +
-                ", statement='" + statement + '\'' +
-                ", postStatement='" + postStatement + '\'' +
-                ", isActive=" + active +
-                ", discipline=" + discipline +
-                ", createdAt=" + createdAt +
-                ", updatedAt=" + updatedAt +
-                '}';
-    }
 }

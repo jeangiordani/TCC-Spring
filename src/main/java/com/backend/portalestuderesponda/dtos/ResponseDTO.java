@@ -4,11 +4,14 @@ import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 
+import java.io.Serial;
 import java.io.Serializable;
 import java.util.HashMap;
 import java.util.Map;
 
+@JsonPropertyOrder({"status", "data"})
 public class ResponseDTO implements Serializable {
+    @Serial
     private static final long serialVersionUID = 1L;
 
     public static ResponseEntity<Object> response(Object object, HttpStatus status) {

@@ -1,5 +1,6 @@
 package com.backend.portalestuderesponda.controllers;
 
+import com.backend.portalestuderesponda.dtos.AlternativeDTO;
 import com.backend.portalestuderesponda.dtos.QuestionDTO;
 import com.backend.portalestuderesponda.dtos.QuestionInsertDTO;
 import com.backend.portalestuderesponda.dtos.ResponseDTO;
@@ -24,7 +25,9 @@ public class QuestionController {
 
     @PreAuthorize("hasAuthority('ADMIN')")
     @PostMapping
-    public ResponseEntity<QuestionDTO> createQuestion(@Valid @RequestBody QuestionInsertDTO questionDTO) {
+    public ResponseEntity<QuestionDTO> createQuestion(
+            @Valid @RequestBody QuestionInsertDTO questionDTO
+    ) {
         QuestionDTO question = questionService.createQuestion(questionDTO);
 
         URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(question.getId()).toUri();
@@ -36,5 +39,37 @@ public class QuestionController {
     @GetMapping("/{id}")
     public ResponseEntity<Object> findQuestionById(@PathVariable UUID id) {
         return ResponseDTO.response(questionService.findById(id), HttpStatus.OK);
+    }
+
+    @GetMapping("")
+    public ResponseEntity<Object> findAllQuestion() {
+        return ResponseDTO.response(questionService.findAll(), HttpStatus.OK);
+    }
+
+    @PreAuthorize("hasAuthority('ADMIN')")
+    @PutMapping("/{id}")
+    public ResponseEntity<Object> update(
+            @PathVariable UUID id, @Valid @RequestBody QuestionInsertDTO questionDto
+    ) {
+        QuestionDTO question = questionService.updateQuestion(id, questionDto);
+        return ResponseDTO.response(question, HttpStatus.OK);
+    }
+
+    @PreAuthorize("hasAuthority('ADMIN')")
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Void> delete(@PathVariable UUID id) {
+        questionService.deleteQuestion(id);
+        return ResponseEntity.noContent().build();
+    }
+
+    @PreAuthorize("hasAuthority('ADMIN')")
+    @PostMapping("/{id}/alternative")
+    public ResponseEntity<Object> addAlternative(
+            @PathVariable UUID id, @Valid @RequestBody AlternativeDTO alternativeDTO
+    ){
+        return ResponseDTO.response(
+                questionService.addAlternative(id, alternativeDTO),
+                HttpStatus.CREATED
+        );
     }
 }
