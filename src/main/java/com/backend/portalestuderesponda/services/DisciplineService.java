@@ -10,7 +10,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
-import java.util.Optional;
 
 @Service
 public class DisciplineService {
@@ -40,27 +39,22 @@ public class DisciplineService {
 
     @Transactional(readOnly = true)
     public DisciplineDTO findById(Long id) {
-        Optional<Discipline> discipline = disciplineRepository.findById(id);
-
-        if (discipline.isEmpty()) {
-            throw new NotFoundException("Disciplina não encontrada");
-        }
-
-        return disciplineMapper.toDisciplineDTO(discipline.get());
+        Discipline discipline = disciplineRepository.findById(id).orElseThrow(
+                ()-> new NotFoundException("Disciplina não encontrada")
+        );
+        return disciplineMapper.toDisciplineDTO(discipline);
 
     }
 
     @Transactional()
     public DisciplineDTO update(Long id, DisciplineDTO disciplineDTO) {
-        Optional<Discipline> discipline = disciplineRepository.findById(id);
+        Discipline discipline = disciplineRepository.findById(id).orElseThrow(
+                ()-> new NotFoundException("Disciplina não encontrada")
+        );
+        discipline.setName(disciplineDTO.getName());
+        discipline.setActive(disciplineDTO.getActive());
 
-        if (discipline.isEmpty()) {
-            throw new NotFoundException("Disciplina não encontrada");
-        }
-        discipline.get().setName(disciplineDTO.getName());
-        discipline.get().setActive(disciplineDTO.getActive());
-
-        return disciplineMapper.toDisciplineDTO(disciplineRepository.saveAndFlush(discipline.get()));
+        return disciplineMapper.toDisciplineDTO(disciplineRepository.saveAndFlush(discipline));
     }
 
     public void delete(Long id) {
