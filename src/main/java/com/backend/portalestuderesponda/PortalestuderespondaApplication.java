@@ -24,18 +24,18 @@ public class PortalestuderespondaApplication implements CommandLineRunner {
 
 	@Override
 	public void run(String... args) throws Exception {
-		Discipline discipline = new Discipline();
-		discipline.setName("Discipline 1");
-		discipline.setActive(true);
-
-		Discipline newDiscipline = disciplineRepository.saveAndFlush(discipline);
-
-		Question question = new Question();
-		question.setDiscipline(newDiscipline);
-		question.setStatement("teste");
-		question.setPostStatement("teste2");
-		question.setActive(true);
-
-		System.out.println(questionRepository.saveAndFlush(question).getId());
+//		Discipline discipline = new Discipline();
+//		discipline.setName("Discipline 1");
+//		discipline.setActive(true);
+//
+//		Discipline newDiscipline = disciplineRepository.saveAndFlush(discipline);
+//
+//		Question question = new Question();
+//		question.setDiscipline(newDiscipline);
+//		question.setStatement("teste");
+//		question.setPostStatement("teste2");
+//		question.setActive(true);
+//
+//		System.out.println(questionRepository.saveAndFlush(question).getId());
 	}
 }

@@ -6,6 +6,7 @@ import com.backend.portalestuderesponda.exceptions.NotFoundException;
 import com.backend.portalestuderesponda.mappers.DisciplineMapper;
 import com.backend.portalestuderesponda.repositories.DisciplineRepository;
 import com.backend.portalestuderesponda.utils.FactoryUtils;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
@@ -32,7 +33,8 @@ class DisciplineServiceTest {
     private DisciplineMapper disciplineMapper;
 
     @Test
-    void shouldReturnDisciplineWhenValidDisciplineId() {
+    @DisplayName("")
+    void givenValidDisciplineId_whenFindById_thenReturnDisciplineSuccessfully() {
 
         final var validDisciplineId = 1L;
 
@@ -49,7 +51,7 @@ class DisciplineServiceTest {
     }
 
     @Test
-    void shouldThrowExceptionWhenDisciplineNotFound() {
+    void givenInvalidDisciplineId_whenFindById_thenThrowNotFoundException() {
         final var invalidDisciplineId = 1L;
 
         when(disciplineRepository.findById(anyLong())).thenReturn(Optional.empty());
@@ -63,7 +65,7 @@ class DisciplineServiceTest {
     }
 
     @Test
-    void shouldReturnAllDisciplines(){
+    void givenDisciplines_whenFindAll_thenReturnAllDisciplines(){
         when(disciplineRepository.findAll()).thenReturn(List.of(new Discipline()));
 
         final var result = disciplineService.findAll();
@@ -77,7 +79,7 @@ class DisciplineServiceTest {
     }
 
     @Test
-    void shouldCreateDisciplineSuccessfully(){
+    void givenValidDiscipline_whenCreate_thenReturnNewDiscipline(){
         Discipline expectedDiscipline = FactoryUtils.generateDisciplines(1).get(0);
 
         when(disciplineRepository.saveAndFlush(any(Discipline.class))).thenReturn(new Discipline());
@@ -92,7 +94,7 @@ class DisciplineServiceTest {
     }
 
     @Test
-    void shouldUpdateDisciplineSuccessfully(){
+    void givenValidDisciplineAndDisciplineId_whenUpdate_thenReturnUpdatedDiscipline(){
 
         Discipline discipline = FactoryUtils.generateDisciplines(1).get(0);
         final Long disciplineId = 1L;
@@ -113,7 +115,7 @@ class DisciplineServiceTest {
     }
 
     @Test
-    void shouldNotUpdateAndThrownExceptionWhenDisciplineNotFound(){
+    void givenNotValidDisciplineId_whenUpdate_thenThrowNotFoundException(){
 
         Discipline discipline = FactoryUtils.generateDisciplines(1).get(0);
         final Long disciplineId = 1L;
@@ -134,7 +136,7 @@ class DisciplineServiceTest {
     }
 
     @Test
-    void shouldDeleteDisciplineSuccessfully(){
+    void givenValidDisciplineId_whenDelete_thenDeleteDisciplineSuccessfully(){
         final Long disciplineId = 1L;
 
         when(disciplineRepository.existsById(anyLong())).thenReturn(true);
@@ -146,7 +148,7 @@ class DisciplineServiceTest {
     }
 
     @Test
-    void shouldNotDeleteDisciplineWhenDataNotFound(){
+    void givenNotValidDisciplineId_whenDelete_thenThrowNotFoundException(){
         final Long disciplineId = 1L;
 
         when(disciplineRepository.existsById(anyLong())).thenReturn(false);
